@@ -57,7 +57,7 @@
                     $result = mysqli_query($connect, $query);
                     //Reading lines returned from database
                     while($row = mysqli_fetch_array($result)){
-                        echo "$row[id].$row[name] $row[surname]<br>";
+                        echo "$row[id]. $row[name] $row[surname]<br>";
                     }
                     //Closing connection
                     mysqli_close($connect);
