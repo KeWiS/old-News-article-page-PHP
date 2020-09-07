@@ -7,7 +7,6 @@ CREATE TABLE `Authors`(
 );
 CREATE TABLE `Articles`(
 	`id` int(11) NOT NULL PRIMARY KEY,
-	`author_id` int(11) NOT NULL,
 	`title` varchar(30),
 	`article` text,
 	`article_date` date
