@@ -2,9 +2,13 @@
 <html>
     <!-- DOCUMENT HEAD SECTION -->
     <head>
+        <!-- UTF-8 CHARSET META -->
         <meta charset = "UTF-8" >
+        <!-- SITE TITLE -->
         <title>News article site</title>
+        <!-- STYLE FILE LINK -->
         <link rel = "stylesheet" type = "text/css" href = "style.css" >
+        <!-- SCRIPT WITH DATEFIX FUNCTION DEFINITION -->
         <script>
             function dateFix(){
                 var today = new Date();
@@ -31,6 +35,8 @@
         <header>
             <h1>News article prototype site</h1>
         </header>
+
+
         <!-- AUTHORS SECTION -->
         <section class = "authors">
             <h2>Article authors:</h2>
@@ -59,6 +65,7 @@
             </ol>
         </section>
 
+
         <!-- ARTICLES SECTION -->
         <section class = "articles">
             <h2>Articles list:</h2>
@@ -75,7 +82,7 @@
                     $connect = mysqli_connect($host, $username, $password, $database);
                     //SQL query variable
                     $query = "SELECT id, title from articles";
-                    //Result for authors list
+                    //Result for articles list
                     $result = mysqli_query($connect, $query);
                     //Reading lines returned from database
                     while($row = mysqli_fetch_array($result)){
@@ -86,6 +93,7 @@
                 ?>
             </ol>
         </section>
+
 
         <!-- GETTING ARTICLES BY ID SECTION -->
         <section class = "getArticleById">
@@ -110,6 +118,7 @@
                 $connect = mysqli_connect($host, $username, $password, $database);
                 //Getting variables from form
                 $id = $_POST['id'];
+                //Checking if form is filled
                 if(isset($id)){
                     //SQL query variable for article
                     $query = "SELECT title, article, article_date FROM articles WHERE id = $id";
@@ -122,6 +131,7 @@
                     //Article database row
                     $row = mysqli_fetch_array($result);
 
+                    //PRINTING RESULTS
                     echo "ARTICLE WITH ID $id:";
                     echo "<h4>$row[title]</h4><br>$row[article]<br><br>";
 
@@ -129,11 +139,14 @@
                     while($row2 = mysqli_fetch_array($result2)){
                         echo "$row2[name] $row2[surname]<br>";
                     }
+                    //PRINTING RESULTS
                     echo "<br><br>$row[article_date]";
                 }
+                //Closing connection
                 mysqli_close($connect);
             ?>
         </section>
+
 
         <!-- GETTING ALL ARTICLES BY AUTHOR -->
         <section class = "allArticles">
@@ -160,21 +173,25 @@
                     $connect = mysqli_connect($host, $username, $password, $database);
                     //Getting variables from form
                     $id = $_POST['id2'];
+                    //Checking if form is filled
                     if(isset($id)){
                         //SQL query variable for article
                         $query = "SELECT title, article_date FROM articles a RIGHT JOIN articles_authors aa ON (a.id = aa.article_id) LEFT JOIN authors au ON (au.id = aa.author_id) WHERE au.id = $id";
                         //Result for article
                         $result = mysqli_query($connect, $query);
+                        //PRINTING RESULTS
                         echo "ARTICLES WITH DATES WRITTEN BY AUTHOR WITH ID $id:<br><br>";
                         //Authors database row loop
                         while($row = mysqli_fetch_array($result)){
                             echo "<li>$row[title], $row[article_date]<br>";
                         }
                     }
+                    //Closing connection
                     mysqli_close($connect);
                 ?>
             </ol>
         </section>
+
 
         <!-- TOP 3 AUTHORS LAST WEEK -->
         <section class = "topAuthors">
@@ -203,10 +220,12 @@
                     while($row = mysqli_fetch_array($result)){
                         echo "<li>$row[name] $row[surname] $row[Articles_written]<br>";
                     }
+                    //Closing connection
                     mysqli_close($connect);
                 ?>
             </ol>
         </section>
+
 
         <!-- ADDING ARTICLES -->
         <section class = "addArticle">
@@ -241,6 +260,7 @@
                 $title = $_POST['title'];
                 $article = $_POST['article'];
                 $date = $_POST['date'];
+                //Checking if form is filled
                 if(isset($title) && isset($article) && isset ($date)){
                     //SQL query variable for article
                     $query = "INSERT INTO articles(title, article, article_date) VALUES ('$title', '$article', '$date')";
@@ -248,9 +268,11 @@
                     mysqli_query($connect, $query);
                     echo "<br>Added article to database";
                 }
+                //Closing connection
                 mysqli_close($connect);
             ?>
         </section>
+
 
         <!-- ADDING AUTHORS -->
         <section class = "addAuthor">
@@ -278,6 +300,7 @@
                 //Getting variables from form
                 $article_id = $_POST['articleId'];
                 $author_id = $_POST['authorId'];
+                //Checking if form is filled
                 if(isset($article_id) && isset($author_id)){
                     //SQL query variable for article
                     $query = "INSERT INTO articles_authors(article_id, author_id) VALUES ('$article_id', '$author_id')";
@@ -285,9 +308,11 @@
                     mysqli_query($connect, $query);
                     echo "<br>Added author to database";
                 }
+                //Closing connection
                 mysqli_close($connect);
             ?>
         </section>
+
 
         <!-- EDIT ARTICLE -->
         <section class = "editArticle">
@@ -325,6 +350,7 @@
                 $title = $_POST['title2'];
                 $article = $_POST['article2'];
                 $date = $_POST['date2'];
+                //Checking if form is filled
                 if(isset($title) && isset($article) && isset ($date)){
                     //SQL query variable for article
                     $query = "UPDATE articles SET title = '$title', article = '$article', article_date = '$date' WHERE id = $article_id";
@@ -332,9 +358,11 @@
                     mysqli_query($connect, $query);
                     echo "<br>Modified article!";
                 }
+                //Closing connection
                 mysqli_close($connect);
             ?>
         </section>
+
 
         <!-- DELETE ARTICLE -->
         <section class = "deleteArticle">
@@ -359,6 +387,7 @@
                 $connect = mysqli_connect($host, $username, $password, $database);
                 //Getting variables from form
                 $article_id = $_POST['articleId3'];
+                //Checking if form is filled
                 if(isset($article_id)){
                     //SQL query variable for article
                     $query = "DELETE FROM articles WHERE id = $article_id";
@@ -368,6 +397,7 @@
                     mysqli_query($connect, $query2);
                     echo "<br>Deleted article!";
                 }
+                //Closing connection
                 mysqli_close($connect);
             ?>
         </section>
