@@ -72,14 +72,14 @@
             <!-- FORM FOR SEARCHING ARTICLES -->
             <form method = "POST">
                 <!-- ARTICLE ID INPUT -->
-                Article's id:<input type = "number" name = "id"/><br>
+                Article's id:<input type = "number" name = "id"/>&emsp;
                 <!-- SEARCH BUTTON -->
-                <br><button type = "submit">SEARCH</button>
+                <button type = "submit">SEARCH</button>
             </form>
             <!-- PHP CODE -->
             <?php
                 //Getting rid of errors (undefined index)
-                //error_reporting(0);
+                error_reporting(0);
                 //Connection variables
                 $host = "localhost";
                 $username = "root";
@@ -89,7 +89,7 @@
                 $connect = mysqli_connect($host, $username, $password, $database);
                 //Getting variables from form
                 $id = $_POST['id'];
-                    if(isset($id)){
+                if(isset($id)){
                     //SQL query variable for article
                     $query = "SELECT title, article, article_date FROM articles WHERE id = $id";
                     //SQL query variable for authors
@@ -101,7 +101,7 @@
                     //Article database row
                     $row = mysqli_fetch_array($result);
 
-                    echo "<h3>$row[title]</h3><br>$row[article]<br><br>";
+                    echo "<h4>$row[title]</h4><br>$row[article]<br><br>";
 
                     //Authors database row loop
                     while($row2 = mysqli_fetch_array($result2)){
@@ -111,6 +111,45 @@
                 }
                 mysqli_close($connect);
             ?>
+        </section>
+        <!-- GETTING ALL ARTICLES BY AUTHOR -->
+        <section class = "allArticles">
+            <h2>Search for every article written by specific author</h2>
+            <!-- FORM FOR SEARCHING ALL ARTICLES BY AUTHOR -->
+            <form method = "POST">
+                <!-- AUTHOR ID INPUT -->
+                Author's id:<input type = "number" name = "id2"/>&emsp;
+                <!-- SEARCH BUTTON -->
+                <button type = "submit">SEARCH</button>
+            </form>
+            <!-- NUMERIC ALL ARTICLES BY AUTHOR LIST -->
+            <ol>
+                <!-- PHP CODE -->
+                <?php
+                    //Getting rid of errors (undefined index)
+                    //error_reporting(0);
+                    //Connection variables
+                    $host = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $database = "news";
+                    //Connection variable
+                    $connect = mysqli_connect($host, $username, $password, $database);
+                    //Getting variables from form
+                    $id = $_POST['id2'];
+                    if(isset($id)){
+                        //SQL query variable for article
+                        $query = "SELECT title, article_date FROM articles a RIGHT JOIN articles_authors aa ON (a.id = aa.article_id) LEFT JOIN authors au ON (au.id = aa.author_id) WHERE au.id = $id";
+                        //Result for article
+                        $result = mysqli_query($connect, $query);
+                        //Authors database row loop
+                        while($row = mysqli_fetch_array($result)){
+                            echo "$row[title], $row[article_date]<br>";
+                        }
+                    }
+                    mysqli_close($connect);
+                ?>
+            </ol>
         </section>
     </body>
 </html>
