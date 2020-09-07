@@ -12,6 +12,10 @@ CREATE TABLE `Articles`(
 	`article` text,
 	`article_date` date
 );
+CREATE TABLE `Articles_authors`(
+	`article_id` int(11),
+	`author_id` int(11)
+);
 INSERT INTO `Authors` (`id`, `name`, `surname`) VALUES
 (1, 'Janina', 'Milek'),
 (2, 'Adam', 'Michalak'),
