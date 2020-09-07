@@ -78,7 +78,7 @@
             </form>
             <!-- PHP CODE -->
             <?php
-                //Getting rid of errors (undefined index)
+                //Getting rid of errors (undefined index etc.)
                 error_reporting(0);
                 //Connection variables
                 $host = "localhost";
@@ -101,6 +101,7 @@
                     //Article database row
                     $row = mysqli_fetch_array($result);
 
+                    echo "ARTICLE WITH ID $id:";
                     echo "<h4>$row[title]</h4><br>$row[article]<br><br>";
 
                     //Authors database row loop
@@ -126,8 +127,8 @@
             <ol>
                 <!-- PHP CODE -->
                 <?php
-                    //Getting rid of errors (undefined index)
-                    //error_reporting(0);
+                    //Getting rid of errors (undefined index etc.)
+                    error_reporting(0);
                     //Connection variables
                     $host = "localhost";
                     $username = "root";
@@ -142,10 +143,42 @@
                         $query = "SELECT title, article_date FROM articles a RIGHT JOIN articles_authors aa ON (a.id = aa.article_id) LEFT JOIN authors au ON (au.id = aa.author_id) WHERE au.id = $id";
                         //Result for article
                         $result = mysqli_query($connect, $query);
+                        echo "ARTICLES WITH DATES WRITTEN BY AUTHOR WITH ID $id:<br><br>";
                         //Authors database row loop
                         while($row = mysqli_fetch_array($result)){
-                            echo "$row[title], $row[article_date]<br>";
+                            echo "<li>$row[title], $row[article_date]<br>";
                         }
+                    }
+                    mysqli_close($connect);
+                ?>
+            </ol>
+        </section>
+        <!-- TOP 3 AUTHORS LAST WEEK -->
+        <section class = "topAuthors">
+            <h2>TOP 3 authors who posted most articles last week<h2>
+            <!-- NUMERIC ALL ARTICLES BY AUTHOR LIST -->
+            <ol>
+                <!-- PHP CODE -->
+                <?php
+                    //Getting rid of errors (undefined index etc.)
+                    //error_reporting(0);
+                    //Getting dates of previus monday and sunday to check if article wast posted bettwen them
+                    $lastMonday = date("Y-m-d", strtotime('monday last week'));
+                    $lastSunday = date("Y-m-d", strtotime('sunday last week'));
+                    //Connection variables
+                    $host = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $database = "news";
+                    //Connection variable
+                    $connect = mysqli_connect($host, $username, $password, $database);
+                    //SQL query variable for top 3 authors
+                    $query = "SELECT name, surname, COUNT(name) as 'Articles_written' FROM authors au RIGHT JOIN articles_authors aa ON (au.id = aa.author_id) LEFT JOIN articles a ON (a.id = aa.article_id) WHERE (a.article_date BETWEEN '$lastMonday' AND '$lastSunday') GROUP BY NAME ORDER BY COUNT(name) DESC LIMIT 3";
+                    //Result for article
+                    $result = mysqli_query($connect, $query);
+                    //Authors database row loop
+                    while($row = mysqli_fetch_array($result)){
+                        echo "<li>$row[name] $row[surname] $row[Articles_written]<br>";
                     }
                     mysqli_close($connect);
                 ?>
