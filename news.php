@@ -101,7 +101,7 @@
             <!-- FORM FOR SEARCHING ARTICLES -->
             <form method = "POST">
                 <!-- ARTICLE ID INPUT -->
-                Article id:<input type = "number" name = "id"/>&emsp;
+                Article id:&emsp;<input type = "number" name = "id"/>&emsp;
                 <!-- SEARCH BUTTON -->
                 <button type = "submit">SEARCH</button>
             </form>
@@ -154,7 +154,7 @@
             <!-- FORM FOR SEARCHING ALL ARTICLES BY AUTHOR -->
             <form method = "POST">
                 <!-- AUTHOR ID INPUT -->
-                Author id:<input type = "number" name = "id2"/>&emsp;
+                Author id:&emsp;<input type = "number" name = "id2"/>&emsp;
                 <!-- SEARCH BUTTON -->
                 <button type = "submit">SEARCH</button>
             </form>
@@ -370,7 +370,7 @@
             <!-- FORM FOR DELETING ARTICLES -->
             <form method = "POST">
                 <!-- ARTICLE ID INPUT -->
-                Article id:<input type = "number" name = "articleId3"/>&emsp;
+                Article id:&emsp;<input type = "number" name = "articleId3"/>&emsp;
                 <!-- DELETE BUTTON -->
                 <button type = "submit">DELETE</button>
             </form>
